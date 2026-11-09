@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>€Trillion (€T) — Trade & Swap</title>
+    <link rel="icon" href="trillion_logo.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #050510; color: #E0E6FF;
+            line-height: 1.6; padding-top: 80px; padding-bottom: 60px;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 60%);
+            z-index: -1; pointer-events: none;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .glass-card {
+            background: rgba(15, 15, 35, 0.6); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.15); border-radius: 30px;
+            padding: 40px; margin-bottom: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .glass-card h1 { font-size: 36px; margin-bottom: 8px; }
+        .glass-card h1 .highlight { color: #FFD700; }
+        .glass-card .sub { color: #8A94C8; margin-bottom: 30px; font-size: 16px; }
+        
+        /* Сетка торговли */
+        .swap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .swap-card {
+            background: rgba(5, 5, 16, 0.8); border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px; padding: 24px; text-align: center;
+            transition: 0.3s; text-decoration: none; color: #E0E6FF;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .swap-card:hover { border-color: #FFD700; transform: translateY(-5px); background: rgba(255, 215, 0, 0.05); box-shadow: 0 10px 30px rgba(255,215,0,0.1); }
+        .swap-card .icon { font-size: 36px; display: block; margin-bottom: 12px; filter: drop-shadow(0 0 10px rgba(255,215,0,0.4)); }
+        .swap-card .name { font-weight: 700; font-size: 18px; margin-bottom: 4px; color: #fff; }
+        .swap-card .desc { font-size: 13px; color: #8A94C8; margin-bottom: 16px; }
+        .pair-badge { 
+            display: inline-block; background: rgba(255, 215, 0, 0.1); color: #FFD700; 
+            padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+            border: 1px solid rgba(255,215,0,0.3); margin-top: auto;
+        }
+        
+        /* Блоки контрактов */
+        .contract-box {
+            background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px; padding: 20px; margin: 24px 0;
+            text-align: center; font-size: 14px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .contract-box .addr { color: #FFD700; font-weight: bold; font-size: 15px; }
+        .contract-box .copy-btn { background: transparent; border: none; color: #8A94C8; cursor: pointer; font-size: 16px; margin-left: 8px; transition: 0.2s; }
+        .contract-box .copy-btn:hover { color: #FFD700; transform: scale(1.1); }
+        .contract-box .solscan-link { color: #8A94C8; text-decoration: none; font-size: 14px; margin-left: 12px; font-family: 'Segoe UI', sans-serif; }
+        .contract-box .solscan-link:hover { color: #fff; }
+
+        .pool-box {
+            background: rgba(74, 140, 255, 0.05); border: 1px solid rgba(74, 140, 255, 0.2);
+            border-radius: 16px; padding: 20px; margin: 24px 0;
+            text-align: center; font-size: 14px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .pool-box .addr { color: #4A8CFF; font-weight: bold; }
+        .pool-box .copy-btn { background: transparent; border: none; color: #8A94C8; cursor: pointer; font-size: 16px; margin-left: 8px; transition: 0.2s; }
+        .pool-box .copy-btn:hover { color: #4A8CFF; transform: scale(1.1); }
+        .pool-box .link { color: #4A8CFF; text-decoration: none; font-size: 14px; margin-left: 12px; font-family: 'Segoe UI', sans-serif; }
+        .pool-box .link:hover { color: #fff; }
+
+        /* Счетчик */
+        .counter-box {
+            text-align: center; padding: 20px;
+            background: rgba(255, 215, 0, 0.05); border-radius: 20px;
+            margin: 30px 0; font-size: 15px; color: #8A94C8;
+            font-family: 'Courier New', monospace; border: 1px solid rgba(255,215,0,0.1);
+        }
+        .counter-box .counter-visitors { color: #FFD700; font-weight: bold; font-size: 18px; }
+        .counter-box .counter-holders { color: #2ECC40; font-weight: bold; font-size: 18px; }
+        .counter-box .counter-clients { color: #FFD700; font-weight: bold; font-size: 18px; }
+
+        .back-link { display: inline-block; margin-top: 20px; color: #FFD700; text-decoration: none; font-weight: 600; font-size: 16px; transition: 0.3s; }
+        .back-link:hover { text-decoration: underline; letter-spacing: 1px; }
+        .logo-img { height: 80px; width: auto; margin-bottom: 24px; border-radius: 50%; box-shadow: 0 0 30px rgba(255,215,0,0.3); }
+
+        @media (max-width: 768px) {
+            .glass-card { padding: 24px; }
+            .swap-grid { grid-template-columns: 1fr; }
+            .contract-box, .pool-box { font-size: 12px; word-break: break-all; }
+            .contract-box .addr, .pool-box .addr { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <img src="trillion_logo.png" alt="€Trillion" class="logo-img" />
+        <h1>Trade & <span class="highlight">Swap</span> €Trillion</h1>
+        <p class="sub">10+ DEXs, aggregators, and terminals for the best price execution.</p>
+
+        <div class="swap-grid">
+            <a href="https://jup.ag/swap/SOL-BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="swap-card">
+                <span class="icon">🔄</span>
+                <span class="name">Jupiter</span>
+                <span class="desc">Best price aggregator</span>
+                <span class="pair-badge">SOL → €T</span>
+            </a>
+            <a href="https://www.geckoterminal.com/solana/pools/6S8ZGfJG1xtt8y4xrXJC7vmGmt2s6qBL21e5aRe4Vru2" target="_blank" class="swap-card">
+                <span class="icon">🌊</span>
+                <span class="name">Meteora</span>
+                <span class="desc">€T/USDT DAMM V2 pool</span>
+                <span class="pair-badge">USDT → €T</span>
+            </a>
+            <a href="https://opensea.io/token/solana/BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="swap-card">
+                <span class="icon">🖼️</span>
+                <span class="name">OpenSea</span>
+                <span class="desc">Direct purchase</span>
+                <span class="pair-badge">Card → €T</span>
+            </a>
+            <a href="https://birdeyeterminal.com/solana/token/BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn?chain=solana&utm_source=solscan" target="_blank" class="swap-card">
+                <span class="icon">🦅</span>
+                <span class="name">Birdeye</span>
+                <span class="desc">Advanced Terminal & Swap</span>
+                <span class="pair-badge">Analytics</span>
+            </a>
+            <a href="https://pump.fun/coin/BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="swap-card">
+                <span class="icon">🚀</span>
+                <span class="name">Pump.fun</span>
+                <span class="desc">Bonding curve trading</span>
+                <span class="pair-badge">Launchpad</span>
+            </a>
+            <a href="https://app.binance.com/uni-qr/web3-token-details?utm_medium=share&tokenCA=BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn&binanceChainId=CT_501&chain=sol" target="_blank" class="swap-card">
+                <span class="icon">🟡</span>
+                <span class="name">Binance Web3</span>
+                <span class="desc">Trade via Binance Wallet</span>
+                <span class="pair-badge">Wallet</span>
+            </a>
+            <a href="https://app.uniswap.org/explore/tokens/solana/BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="swap-card">
+                <span class="icon">🦄</span>
+                <span class="name">Uniswap</span>
+                <span class="desc">Cross-chain (Wormhole)</span>
+                <span class="pair-badge">ETH → €T</span>
+            </a>
+            <a href="https://app.raydium.io/swap/?outputMint=BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="swap-card">
+                <span class="icon">☀️</span>
+                <span class="name">Raydium</span>
+                <span class="desc">Solana DEX</span>
+                <span class="pair-badge">SOL → €T</span>
+            </a>
+            <a href="https://orca.so/swap?inputMint=So11111111111111111111111111111111111111112&outputMint=BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="swap-card">
+                <span class="icon">🐋</span>
+                <span class="name">Orca</span>
+                <span class="desc">Concentrated liquidity</span>
+                <span class="pair-badge">SOL → €T</span>
+            </a>
+            <a href="https://www.kraken.com/" target="_blank" class="swap-card">
+                <span class="icon">🐙</span>
+                <span class="name">Kraken</span>
+                <span class="desc">Regulated exchange</span>
+                <span class="pair-badge">Fiat</span>
+            </a>
+        </div>
+
+        <div class="counter-box">
+            👥 <span class="counter-visitors">8,888,888</span> visitors
+            &nbsp;·&nbsp;
+            💎 <span class="counter-holders">2</span> holders
+            &nbsp;·&nbsp;
+            🤝 <span class="counter-clients">0</span> clients
+        </div>
+
+        <div class="contract-box">
+            📜 Contract: <span class="addr">BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn</span>
+            <button onclick="navigator.clipboard.writeText('BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn')" class="copy-btn" title="Copy">📋</button>
+            <a href="https://solscan.io/token/BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="solscan-link">🔍 Solscan</a>
+        </div>
+
+        <div class="pool-box">
+            🌊 Meteora Pool (€T/USDT): <span class="addr">6S8ZGfJG1xtt8y4xrXJC7vmGmt2s6qBL21e5aRe4Vru2</span>
+            <button onclick="navigator.clipboard.writeText('6S8ZGfJG1xtt8y4xrXJC7vmGmt2s6qBL21e5aRe4Vru2')" class="copy-btn" title="Copy">📋</button>
+            <a href="https://www.geckoterminal.com/solana/pools/6S8ZGfJG1xtt8y4xrXJC7vmGmt2s6qBL21e5aRe4Vru2" target="_blank" class="link">🔍 GeckoTerminal</a>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to €Trillion Home</a>
+    </div>
+</div>
+
+<script src="counter.js"></script>
+<script src="ai-agent.js"></script>
+
+</body>
+</html>
