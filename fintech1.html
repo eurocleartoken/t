@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>€Trillion — 500+ Fintech Use Cases</title>
+    <link rel="icon" href="trillion_logo.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #050510; color: #E0E6FF;
+            line-height: 1.6; padding-top: 80px; padding-bottom: 60px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(5, 5, 16, 0.9); backdrop-filter: blur(12px);
+            z-index: 100; border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 12px 0;
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .logo { display: flex; align-items: center; gap: 8px; }
+        .logo img { height: 36px; width: auto; border-radius: 50%; }
+        .logo-text { font-size: 20px; font-weight: 700; color: #fff; }
+        nav { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+        nav a { color: #8A94C8; text-decoration: none; font-size: 13px; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #FFD700; }
+        nav a.active { color: #FFD700; border-bottom: 2px solid #FFD700; }
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA500); color: #0A0E27; padding: 8px 20px;
+            border-radius: 30px; font-weight: 700; text-decoration: none;
+            transition: 0.3s; display: inline-block; font-size: 14px;
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, #FFA500, #FFD700); transform: scale(1.02); }
+        
+        section { padding: 40px 0; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-tag {
+            display: inline-block; background: rgba(255, 215, 0, 0.12);
+            color: #FFD700; padding: 4px 16px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .section-header h1 { font-size: 38px; font-weight: 800; margin: 10px 0; }
+        .section-header h1 .highlight { color: #FFD700; }
+        .section-header p { color: #8A94C8; max-width: 600px; margin: 0 auto; font-size: 16px; }
+
+        .categories {
+            display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 30px;
+        }
+        .cat-btn {
+            background: rgba(15, 15, 35, 0.6); border: 1px solid rgba(255, 215, 0, 0.2);
+            color: #8A94C8; padding: 8px 20px; border-radius: 30px;
+            font-size: 14px; cursor: pointer; transition: 0.3s;
+        }
+        .cat-btn.active, .cat-btn:hover { background: #FFD700; color: #0A0E27; border-color: #FFD700; }
+        
+        .fintech-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px; margin-bottom: 40px;
+        }
+        .fintech-card {
+            background: rgba(15, 15, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px; padding: 20px; transition: 0.3s; cursor: default;
+        }
+        .fintech-card:hover { border-color: #FFD700; background: rgba(255, 215, 0, 0.05); transform: translateY(-3px); }
+        .fintech-card .fc-icon { font-size: 28px; margin-bottom: 8px; }
+        .fintech-card .fc-title { font-size: 15px; font-weight: 600; color: #fff; }
+        .fintech-card .fc-cat {
+            font-size: 11px; text-transform: uppercase; color: #5A649A;
+            letter-spacing: 0.5px; margin-top: 6px;
+        }
+
+        .contract-box {
+            background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px; padding: 20px; margin: 30px 0;
+            text-align: center; font-size: 14px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .contract-box .addr { color: #FFD700; font-weight: bold; }
+        .contract-box .copy-btn { background: transparent; border: none; color: #8A94C8; cursor: pointer; font-size: 16px; margin-left: 8px; }
+        .contract-box .copy-btn:hover { color: #FFD700; }
+        .contract-box .solscan-link { color: #8A94C8; text-decoration: none; font-size: 14px; margin-left: 12px; font-family: 'Segoe UI', sans-serif; }
+        .contract-box .solscan-link:hover { color: #fff; }
+
+        .back-link { display: inline-block; margin-top: 20px; color: #FFD700; text-decoration: none; font-weight: 600; font-size: 16px; }
+        .back-link:hover { text-decoration: underline; }
+
+        footer {
+            background: #02020A; padding: 30px 0 20px; text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 40px;
+        }
+        footer p { color: #3A406A; font-size: 14px; }
+
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; align-items: stretch; }
+            nav { justify-content: center; gap: 8px; }
+            nav a { font-size: 11px; }
+            .section-header h1 { font-size: 28px; }
+            .fintech-grid { grid-template-columns: 1fr 1fr; }
+            .contract-box { font-size: 12px; word-break: break-all; }
+        }
+        @media (max-width: 480px) {
+            .fintech-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <img src="trillion_logo.png" alt="€Trillion" />
+            <span class="logo-text">€TRILLION</span>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="trade.html">Trade</a>
+            <a href="technology.html">Technology</a>
+            <a href="fintech1.html" class="active">Use Cases</a>
+            <a href="ecosystem.html">Ecosystem</a>
+        </nav>
+        <a href="buy.html" class="btn-primary">Buy €T</a>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Fintech</span>
+            <h1>500+ <span class="highlight">Use Cases</span> for €Trillion</h1>
+            <p>From sovereign wealth to daily micropayments — €T powers the entire 123 Network.</p>
+        </div>
+
+        <div class="categories">
+            <button class="cat-btn active" data-cat="all">All</button>
+            <button class="cat-btn" data-cat="enterprise">Enterprise</button>
+            <button class="cat-btn" data-cat="rwa">RWA</button>
+            <button class="cat-btn" data-cat="payments">Payments</button>
+            <button class="cat-btn" data-cat="ai">AI & Tech</button>
+            <button class="cat-btn" data-cat="gaming">Gaming</button>
+        </div>
+
+        <div class="fintech-grid" id="fintechGrid"></div>
+
+        <div class="contract-box">
+            📜 Contract: <span class="addr">BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn</span>
+            <button onclick="navigator.clipboard.writeText('BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn')" class="copy-btn">📋</button>
+            <a href="https://solscan.io/token/BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="solscan-link">🔍 Solscan</a>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to €Trillion Home</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>© 2026 One•Two•Three. Built on Solana. | Contract: BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn</p>
+    </div>
+</footer>
+
+<script>
+    const ideas = [
+        // Enterprise
+        { icon: '🏦', title: 'Sovereign Wealth Funds', cat: 'enterprise' },
+        { icon: '💼', title: 'Corporate Treasury Management', cat: 'enterprise' },
+        { icon: '🤝', title: 'M&A Escrow Settlements', cat: 'enterprise' },
+        { icon: '📊', title: 'Institutional Asset Management', cat: 'enterprise' },
+        { icon: '🏗️', title: 'Infrastructure Project Funding', cat: 'enterprise' },
+        { icon: '🚢', title: 'Trade Finance & Shipping', cat: 'enterprise' },
+        { icon: '🛡️', title: 'KYC/AML Compliance Hooks', cat: 'enterprise' },
+        { icon: '⚖️', title: 'Legal Settlement Payments', cat: 'enterprise' },
+        { icon: '🔒', title: 'On-chain Vesting for Staff', cat: 'enterprise' },
+        { icon: '🏛️', title: 'Government Bond Tokenization', cat: 'enterprise' },
+        // RWA
+        { icon: '🏢', title: 'Commercial Real Estate', cat: 'rwa' },
+        { icon: '🏘️', title: 'Residential Property Fractions', cat: 'rwa' },
+        { icon: '🥇', title: 'Gold & Precious Metals', cat: 'rwa' },
+        { icon: '✈️', title: 'Aviation Leasing (AviaBank)', cat: 'rwa' },
+        { icon: '🚢', title: 'Maritime Shipping Assets', cat: 'rwa' },
+        { icon: '🎨', title: 'Fine Art Tokenization', cat: 'rwa' },
+        { icon: '💎', title: 'Diamond & Jewelry Assets', cat: 'rwa' },
+        { icon: '🌾', title: 'Agricultural Commodities', cat: 'rwa' },
+        { icon: '⚡', title: 'Energy & Carbon Credits', cat: 'rwa' },
+        { icon: '🏭', title: 'Industrial Equipment', cat: 'rwa' },
+        { icon: '📜', title: 'Intellectual Property Royalties', cat: 'rwa' },
+        { icon: '🏥', title: 'Healthcare Infrastructure', cat: 'rwa' },
+        // Payments
+        { icon: '🇪🇺', title: 'SEPA Instant Transfers', cat: 'payments' },
+        { icon: '🏦', title: 'SWIFT International Wire', cat: 'payments' },
+        { icon: '🇬🇧', title: 'CHAPS UK Transfers', cat: 'payments' },
+        { icon: '🇨🇳', title: 'CIPS China Cross-Border', cat: 'payments' },
+        { icon: '🇺🇸', title: 'Fedwire & CHIPS (USD)', cat: 'payments' },
+        { icon: '🇮🇳', title: 'UPI India Instant', cat: 'payments' },
+        { icon: '🇧🇷', title: 'PIX Brazil Instant', cat: 'payments' },
+        { icon: '🇦🇺', title: 'NPP Australia', cat: 'payments' },
+        { icon: '💳', title: 'Visa / Mastercard Integration', cat: 'payments' },
+        { icon: '💳', title: 'UnionPay China', cat: 'payments' },
+        { icon: '💳', title: 'Amex Corporate Cards', cat: 'payments' },
+        { icon: '💠', title: 'SWIFT GPI Tracking', cat: 'payments' },
+        // AI & Tech
+        { icon: '🤖', title: 'AI API per-Request', cat: 'ai' },
+        { icon: '🧠', title: 'Neural Network Inference', cat: 'ai' },
+        { icon: '📡', title: 'IoT Device Data Payments', cat: 'ai' },
+        { icon: '🛰️', title: 'Satellite Data Subscriptions', cat: 'ai' },
+        { icon: '🔬', title: 'Research Data Access', cat: 'ai' },
+        { icon: '🧬', title: 'Genomic Data Payments', cat: 'ai' },
+        { icon: '🖥️', title: 'Cloud Computing Credits', cat: 'ai' },
+        { icon: '📊', title: 'AI Trading Bot Subscriptions', cat: 'ai' },
+        { icon: '🔐', title: 'Cybersecurity Services', cat: 'ai' },
+        { icon: '💻', title: 'SaaS Micro-Payments', cat: 'ai' },
+        // Gaming
+        { icon: '🎮', title: 'In-Game Premium Currency', cat: 'gaming' },
+        { icon: '🏆', title: 'Esports Tournament Fees', cat: 'gaming' },
+        { icon: '🎲', title: 'Online Poker Entry', cat: 'gaming' },
+        { icon: '⚔️', title: 'MMORPG Item Trading', cat: 'gaming' },
+        { icon: '🃏', title: 'Collectible Card Packs', cat: 'gaming' },
+        { icon: '🎰', title: 'Casino Micro-Bets', cat: 'gaming' },
+        { icon: '🎯', title: 'Skill-Based Game Entries', cat: 'gaming' },
+        { icon: '🏁', title: 'Racing Game Upgrades', cat: 'gaming' },
+        { icon: '🧙', title: 'Fantasy Sports Fees', cat: 'gaming' },
+        { icon: '🕹️', title: 'Arcade Coin-Op', cat: 'gaming' },
+    ];
+
+    const grid = document.getElementById('fintechGrid');
+
+    function render(category = 'all') {
+        grid.innerHTML = '';
+        const filtered = category === 'all' ? ideas : ideas.filter(i => i.cat === category);
+        filtered.forEach(idea => {
+            const card = document.createElement('div');
+            card.className = 'fintech-card';
+            card.innerHTML = `
+                <div class="fc-icon">${idea.icon}</div>
+                <div class="fc-title">${idea.title}</div>
+                <div class="fc-cat">${idea.cat}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    render('all');
+
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            render(this.dataset.cat);
+        });
+    });
+</script>
+
+<script src="counter.js"></script>
+
+</body>
+</html>
