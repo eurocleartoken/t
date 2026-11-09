@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>€Trillion — RWA & Institutional Fintech</title>
+    <link rel="icon" href="trillion_logo.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #050510; color: #E0E6FF;
+            line-height: 1.6; padding-top: 80px; padding-bottom: 60px;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 60%);
+            z-index: -1; pointer-events: none;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(5, 5, 16, 0.9); backdrop-filter: blur(12px);
+            z-index: 100; border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 12px 0;
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .logo { display: flex; align-items: center; gap: 8px; }
+        .logo img { height: 36px; width: auto; border-radius: 50%; }
+        .logo-text { font-size: 20px; font-weight: 700; color: #fff; }
+        nav { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+        nav a { color: #8A94C8; text-decoration: none; font-size: 13px; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #FFD700; }
+        nav a.active { color: #FFD700; border-bottom: 2px solid #FFD700; }
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA500); color: #0A0E27; padding: 8px 20px;
+            border-radius: 30px; font-weight: 700; text-decoration: none;
+            transition: 0.3s; display: inline-block; font-size: 14px;
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, #FFA500, #FFD700); transform: scale(1.02); }
+
+        section { padding: 40px 0; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-tag {
+            display: inline-block; background: rgba(255, 215, 0, 0.12);
+            color: #FFD700; padding: 4px 16px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .section-header h1 { font-size: 38px; font-weight: 800; margin: 10px 0; }
+        .section-header h1 .highlight { color: #FFD700; }
+        .section-header p { color: #8A94C8; max-width: 700px; margin: 0 auto; font-size: 16px; }
+
+        .rwa-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+        }
+        .rwa-card {
+            background: linear-gradient(180deg, rgba(20, 20, 45, 0.6) 0%, rgba(5, 5, 16, 0.6) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px; padding: 30px; transition: 0.4s;
+        }
+        .rwa-card:hover { border-color: #FFD700; transform: translateY(-5px); box-shadow: 0 15px 40px rgba(255,215,0,0.1); }
+        .rwa-card .rwa-icon { font-size: 40px; margin-bottom: 16px; }
+        .rwa-card h3 { color: #fff; font-size: 22px; margin-bottom: 10px; }
+        .rwa-card p { color: #8A94C8; font-size: 15px; margin-bottom: 20px; }
+        .feature-badge {
+            display: inline-block; background: rgba(255, 215, 0, 0.15);
+            color: #FFD700; padding: 4px 12px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            margin-top: 8px; margin-right: 6px; border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .image-block { max-width: 900px; margin: 40px auto; text-align: center; }
+        .image-block img {
+            max-width: 100%; border-radius: 24px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .contract-box {
+            background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px; padding: 20px; margin: 30px 0;
+            text-align: center; font-size: 14px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .contract-box .addr { color: #FFD700; font-weight: bold; }
+        .contract-box .copy-btn { background: transparent; border: none; color: #8A94C8; cursor: pointer; font-size: 16px; margin-left: 8px; }
+        .contract-box .copy-btn:hover { color: #FFD700; }
+        .contract-box .solscan-link { color: #8A94C8; text-decoration: none; font-size: 14px; margin-left: 12px; font-family: 'Segoe UI', sans-serif; }
+        .contract-box .solscan-link:hover { color: #fff; }
+
+        .back-link { display: inline-block; margin-top: 20px; color: #FFD700; text-decoration: none; font-weight: 600; font-size: 16px; }
+        .back-link:hover { text-decoration: underline; }
+
+        footer {
+            background: #02020A; padding: 30px 0 20px; text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 40px;
+        }
+        footer p { color: #3A406A; font-size: 14px; }
+
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; align-items: stretch; }
+            nav { justify-content: center; gap: 8px; }
+            nav a { font-size: 11px; }
+            .section-header h1 { font-size: 28px; }
+            .contract-box { font-size: 12px; word-break: break-all; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <img src="trillion_logo.png" alt="€Trillion" />
+            <span class="logo-text">€TRILLION</span>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="trade.html">Trade</a>
+            <a href="technology.html">Technology</a>
+            <a href="fintech2.html" class="active">RWA</a>
+            <a href="ecosystem.html">Ecosystem</a>
+        </nav>
+        <a href="buy.html" class="btn-primary">Buy €T</a>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">RWA & Institutional</span>
+            <h1>Real-World Assets & <span class="highlight">Fintech</span></h1>
+            <p>€Trillion is the gateway to institutional-grade DeFi, RWA tokenization, and sovereign wealth management.</p>
+        </div>
+
+        <div class="image-block">
+            <img src="trillion_rwa_diagram.png" alt="€Trillion RWA Diagram" onerror="this.src='trillion_logo.png'" />
+        </div>
+
+        <div class="rwa-grid">
+            <div class="rwa-card">
+                <div class="rwa-icon">🏛️</div>
+                <h3>Sovereign Wealth</h3>
+                <p>Tokenize government bonds, infrastructure projects, and national reserves. €T provides the settlement layer for sovereign funds.</p>
+                <span class="feature-badge">Bonds</span>
+                <span class="feature-badge">Infrastructure</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">🏢</div>
+                <h3>Institutional Real Estate</h3>
+                <p>Fractional ownership of commercial real estate, industrial parks, and luxury properties across Europe and Asia.</p>
+                <span class="feature-badge">Commercial</span>
+                <span class="feature-badge">Industrial</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">✈️</div>
+                <h3>Aviation & Maritime</h3>
+                <p>Tokenize aircraft (AviaBank), ships, and logistics fleets. Asset-backed tokens with verified service history.</p>
+                <span class="feature-badge">Aircraft</span>
+                <span class="feature-badge">Shipping</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">💎</div>
+                <h3>Commodities & Art</h3>
+                <p>Gold, diamonds, fine art, and rare collectibles. Vaulted assets with on-chain proof of ownership.</p>
+                <span class="feature-badge">Gold</span>
+                <span class="feature-badge">Art</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">💼</div>
+                <h3>Corporate Treasury</h3>
+                <p>Enterprise-grade treasury management with AI-powered yield optimization and automated compliance (Transfer Hooks).</p>
+                <span class="feature-badge">AI Treasury</span>
+                <span class="feature-badge">Compliance</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">🌍</div>
+                <h3>Global Settlement</h3>
+                <p>SEPA, SWIFT, CHAPS, CIPS, UPI, Fedwire, PIX — €Trillion connects all major payment rails for cross-border settlement.</p>
+                <span class="feature-badge">SEPA</span>
+                <span class="feature-badge">SWIFT</span>
+                <span class="feature-badge">CIPS</span>
+            </div>
+        </div>
+
+        <div class="contract-box">
+            📜 Contract: <span class="addr">BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn</span>
+            <button onclick="navigator.clipboard.writeText('BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn')" class="copy-btn">📋</button>
+            <a href="https://solscan.io/token/BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn" target="_blank" class="solscan-link">🔍 Solscan</a>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to €Trillion Home</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>© 2026 One•Two•Three. Built on Solana. | Contract: BswcV7FaiFL9EoBUzvDLwFcaUf2puxEymSH9Q2Q6RWKn</p>
+    </div>
+</footer>
+
+<script src="counter.js"></script>
+
+</body>
+</html>
