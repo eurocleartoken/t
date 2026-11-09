@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Global Ecosystem Map | 123 Network & Partners</title>
+    <meta name="description" content="Complete routing and liquidity map for the 123 Network, including €Trillion, €Millions, AviaBank, RWA Bank, and more." />
+    <link rel="icon" href="trillion_logo.png" />
+    
+    <!-- JSON-LD: Огромный массив данных для ИИ-агентов -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "123 Network Global Ecosystem",
+      "description": "Multi-sector Solana ecosystem including 123 Tokens, AviaBank, RWA Bank, VisaCrypto, and retail tokens. Flagship: €Trillion (€T).",
+      "sectors": [
+        { "@type": "DefinedTerm", "name": "Core 123 Ecosystem", "tokens": ["ONE", "TAXI", "€T", "€M", "777", "365", "FIVE", "€50", "€20", "TWO", "THREE"] },
+        { "@type": "DefinedTerm", "name": "AviaBank Aviation", "tokens": ["A220", "A350", "B787", "C929", "E195", "ESCR", "DLCT", "SBLCT", "LUMP", "FWD"] },
+        { "@type": "DefinedTerm", "name": "RWA Bank & Euribank", "tokens": ["AUDT", "PROOF", "CERT", "HUB", "SHIELD", "USMT", "AJR", "DEPO", "CREDIT"] },
+        { "@type": "DefinedTerm", "name": "VisaCrypto Payments", "tokens": ["UNIONPAY", "AMEX", "REVOLUT", "GIROCARD", "ERP", "EURC"] },
+        { "@type": "DefinedTerm", "name": "GoldTaxi & Retail", "tokens": ["GRAB", "DIDI", "UBER", "TIP", "FDX", "MB", "NIKE", "PUMA", "ZARA", "GUCCI", "COS"] },
+        { "@type": "DefinedTerm", "name": "Humo & BYT", "tokens": ["HUMO", "AUZ", "BYT"] }
+      ]
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #050510; color: #E0E6FF;
+            line-height: 1.6; padding-top: 80px; padding-bottom: 60px;
+            background-image: url('trillion_ecosystem_bg.gif');
+            background-size: cover; background-attachment: fixed; background-position: center;
+        }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 16, 0.9); z-index: -1;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(5, 5, 16, 0.95); backdrop-filter: blur(12px);
+            z-index: 100; border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 12px 0;
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+        }
+        .logo { display: flex; align-items: center; gap: 8px; }
+        .logo img { height: 36px; width: auto; border-radius: 50%; }
+        .logo-text { font-size: 20px; font-weight: 700; color: #fff; }
+        nav { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+        nav a { color: #8A94C8; text-decoration: none; font-size: 13px; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #FFD700; }
+        nav a.active { color: #FFD700; border-bottom: 2px solid #FFD700; }
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA500); color: #0A0E27; padding: 8px 20px;
+            border-radius: 30px; font-weight: 700; text-decoration: none;
+            transition: 0.3s; display: inline-block; font-size: 14px;
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, #FFA500, #FFD700); transform: scale(1.02); }
+
+        section { padding: 40px 0; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h1 { font-size: 38px; font-weight: 800; margin-bottom: 12px; color: #fff; }
+        .section-header h1 .highlight { color: #FFD700; }
+        .section-header p { color: #8A94C8; max-width: 800px; margin: 0 auto; font-size: 16px; }
+
+        .sector-block {
+            background: rgba(15, 15, 35, 0.7); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px; padding: 30px; margin-bottom: 30px;
+            transition: 0.4s;
+        }
+        .sector-block:hover { border-color: #FFD700; box-shadow: 0 0 30px rgba(255,215,0,0.1); }
+        
+        .sector-title {
+            font-size: 22px; color: #fff; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
+        }
+        .sector-title span { color: #FFD700; font-size: 28px; }
+
+        .token-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
+        }
+        .token-card {
+            background: rgba(5, 5, 16, 0.8); border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 16px; padding: 20px; text-align: center;
+            text-decoration: none; color: #E0E6FF; transition: 0.3s;
+        }
+        .token-card:hover { border-color: #FFD700; transform: translateY(-4px); background: rgba(255, 215, 0, 0.05); }
+        .token-card .ticker { font-size: 20px; font-weight: 700; color: #FFD700; margin-bottom: 4px; }
+        .token-card .name { font-size: 14px; color: #C0C8F0; }
+        .token-card .role { font-size: 11px; text-transform: uppercase; margin-top: 8px; color: #5A649A; }
+
+        .token-card.active-token {
+            border-color: #FFD700; background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        footer {
+            background: #02020A; padding: 30px 0 20px; text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 40px;
+        }
+        footer p { color: #3A406A; font-size: 14px; margin-bottom: 10px; }
+        footer a { color: #5A649A; text-decoration: none; margin: 0 10px; font-size: 14px; }
+        footer a:hover { color: #FFD700; }
+
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; align-items: stretch; }
+            nav { justify-content: center; gap: 8px; }
+            nav a { font-size: 11px; }
+            .section-header h1 { font-size: 28px; }
+            .token-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .token-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <img src="trillion_logo.png" alt="€Trillion" />
+            <span class="logo-text">€TRILLION</span>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="trade.html">Trade</a>
+            <a href="technology.html">Technology</a>
+            <a href="ecosystem.html" class="active">Ecosystem</a>
+        </nav>
+        <a href="buy.html" class="btn-primary">Buy €T</a>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <div class="section-header">
+            <h1>Global <span class="highlight">Ecosystem Map</span></h1>
+            <p>
+                The 123 Network is not just one token. It is a multi-sector conglomerate powered by Solana. 
+                Explore our 40+ interconnected projects, from aviation and banking to global payments and retail.
+            </p>
+        </div>
+
+        <!-- 1. CORE 123 -->
+        <div class="sector-block">
+            <div class="sector-title"><span>🏦</span> 123 Core Ecosystem</div>
+            <div class="token-grid">
+                <a href="index.html" class="token-card active-token">
+                    <div class="ticker">€T</div>
+                    <div class="name">€Trillion</div>
+                    <div class="role">Flagship Hub</div>
+                </a>
+                <a href="https://eurocleartoken.github.io/millions/" target="_blank" class="token-card">
+                    <div class="ticker">€M</div>
+                    <div class="name">€Millions</div>
+                    <div class="role">Financial Hub</div>
+                </a>
+                <a href="https://123tokens.github.io/one/" target="_blank" class="token-card">
+                    <div class="ticker">$ONE</div>
+                    <div class="name">One Dollar</div>
+                    <div class="role">Primary Hub</div>
+                </a>
+                <a href="https://goldtaxi.github.io/taxi/" target="_blank" class="token-card">
+                    <div class="ticker">$TAXI</div>
+                    <div class="name">Gold Taxi</div>
+                    <div class="role">Routing Hub</div>
+                </a>
+                <a href="https://123tokens.github.io/ghina/" target="_blank" class="token-card">
+                    <div class="ticker">$777</div>
+                    <div class="name">Ghina</div>
+                    <div class="role">Wealth</div>
+                </a>
+                <a href="https://123tokens.github.io/365/" target="_blank" class="token-card">
+                    <div class="ticker">¥365</div>
+                    <div class="name">Year Token</div>
+                    <div class="role">Utility</div>
+                </a>
+                <a href="https://123tokens.github.io/five/" target="_blank" class="token-card">
+                    <div class="ticker">¥FIVE</div>
+                    <div class="name">Lucky Five</div>
+                    <div class="role">Utility</div>
+                </a>
+                <a href="https://eurocleartoken.github.io/20/" target="_blank" class="token-card">
+                    <div class="ticker">€20</div>
+                    <div class="name">Euro 20</div>
+                    <div class="role">Currency</div>
+                </a>
+                <a href="https://123tokens.github.io/two/" target="_blank" class="token-card">
+                    <div class="ticker">€TWO</div>
+                    <div class="name">Euro Two</div>
+                    <div class="role">Currency</div>
+                </a>
+                <a href="https://123tokens.github.io/three/" target="_blank" class="token-card">
+                    <div class="ticker">£THREE</div>
+                    <div class="name">Pound Three</div>
+                    <div class="role">Currency</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. AVIABANK -->
+        <div class="sector-block">
+            <div class="sector-title"><span>✈️</span> AviaBank Aviation Assets</div>
+            <div class="token-grid">
+                <a href="https://aviabank.github.io/a220/" target="_blank" class="token-card">
+                    <div class="ticker">€A220</div>
+                    <div class="name">Airbus A220</div>
+                    <div class="role">Aviation RWA</div>
+                </a>
+                <a href="https://aviabank.github.io/a350/" target="_blank" class="token-card">
+                    <div class="ticker">€A350</div>
+                    <div class="name">Airbus A350</div>
+                    <div class="role">Aviation RWA</div>
+                </a>
+                <a href="https://aviabank.github.io/b787/" target="_blank" class="token-card">
+                    <div class="ticker">€B787</div>
+                    <div class="name">Boeing 787</div>
+                    <div class="role">Aviation RWA</div>
+                </a>
+                <a href="https://aviabank.github.io/c929/" target="_blank" class="token-card">
+                    <div class="ticker">€C929</div>
+                    <div class="name">COMAC C929</div>
+                    <div class="role">Aviation RWA</div>
+                </a>
+                <a href="https://aviabank.github.io/e195/" target="_blank" class="token-card">
+                    <div class="ticker">€E195</div>
+                    <div class="name">Embraer E195</div>
+                    <div class="role">Aviation RWA</div>
+                </a>
+                <a href="https://aviabank.github.io/escr/" target="_blank" class="token-card">
+                    <div class="ticker">€ESCR</div>
+                    <div class="name">Escrow</div>
+                    <div class="role">Aviation Service</div>
+                </a>
+                <a href="https://aviabank.github.io/dlct/" target="_blank" class="token-card">
+                    <div class="ticker">€DLCT</div>
+                    <div class="name">Delivery</div>
+                    <div class="role">Aviation Service</div>
+                </a>
+                <a href="https://aviabank.github.io/sblct/" target="_blank" class="token-card">
+                    <div class="ticker">€SBLCT</div>
+                    <div class="name">Sublease</div>
+                    <div class="role">Aviation Service</div>
+                </a>
+                <a href="https://aviabank.github.io/lump/" target="_blank" class="token-card">
+                    <div class="ticker">€LUMP</div>
+                    <div class="name">Lump Sum</div>
+                    <div class="role">Aviation Service</div>
+                </a>
+                <a href="https://aviabank.github.io/fwd/" target="_blank" class="token-card">
+                    <div class="ticker">€FWD</div>
+                    <div class="name">Forward</div>
+                    <div class="role">Aviation Service</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 3. RWA BANK -->
+        <div class="sector-block">
+            <div class="sector-title"><span>🏛️</span> RWA Bank & Euribank</div>
+            <div class="token-grid">
+                <a href="https://rwabank.github.io/audt/" target="_blank" class="token-card">
+                    <div class="ticker">€AUDT</div>
+                    <div class="name">Audit</div>
+                    <div class="role">RWA Service</div>
+                </a>
+                <a href="https://rwabank.github.io/proof/" target="_blank" class="token-card">
+                    <div class="ticker">€PROOF</div>
+                    <div class="name">Proof</div>
+                    <div class="role">RWA Service</div>
+                </a>
+                <a href="https://rwabank.github.io/cert/" target="_blank" class="token-card">
+                    <div class="ticker">€CERT</div>
+                    <div class="name">Certificate</div>
+                    <div class="role">RWA Service</div>
+                </a>
+                <a href="https://rwabank.github.io/hub/" target="_blank" class="token-card">
+                    <div class="ticker">€HUB</div>
+                    <div class="name">RWA Hub</div>
+                    <div class="role">RWA Hub</div>
+                </a>
+                <a href="https://rwabank.github.io/shield/" target="_blank" class="token-card">
+                    <div class="ticker">€SHIELD</div>
+                    <div class="name">Shield</div>
+                    <div class="role">Security</div>
+                </a>
+                <a href="https://euribank.github.io/usmt/" target="_blank" class="token-card">
+                    <div class="ticker">€USMT</div>
+                    <div class="name">USMT Token</div>
+                    <div class="role">Banking RWA</div>
+                </a>
+                <a href="https://metrobanktoken.github.io/ajr/" target="_blank" class="token-card">
+                    <div class="ticker">€AJR</div>
+                    <div class="name">Adjustment</div>
+                    <div class="role">Banking</div>
+                </a>
+                <a href="https://metrobanktoken.github.io/depo/" target="_blank" class="token-card">
+                    <div class="ticker">€DEPO</div>
+                    <div class="name">Deposit</div>
+                    <div class="role">Banking</div>
+                </a>
+                <a href="https://metrobanktoken.github.io/credit/" target="_blank" class="token-card">
+                    <div class="ticker">€CREDIT</div>
+                    <div class="name">Credit</div>
+                    <div class="role">Banking</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 4. VISACRYPTO -->
+        <div class="sector-block">
+            <div class="sector-title"><span>💳</span> VisaCrypto & Payment Systems</div>
+            <div class="token-grid">
+                <a href="https://visacrypto.github.io/unionpay/" target="_blank" class="token-card">
+                    <div class="ticker">€UP</div>
+                    <div class="name">UnionPay</div>
+                    <div class="role">Payment</div>
+                </a>
+                <a href="https://visacrypto.github.io/amex/" target="_blank" class="token-card">
+                    <div class="ticker">€AMEX</div>
+                    <div class="name">American Express</div>
+                    <div class="role">Payment</div>
+                </a>
+                <a href="https://visacrypto.github.io/revolut/" target="_blank" class="token-card">
+                    <div class="ticker">€REV</div>
+                    <div class="name">Revolut</div>
+                    <div class="role">Payment</div>
+                </a>
+                <a href="https://visacrypto.github.io/girocard/" target="_blank" class="token-card">
+                    <div class="ticker">€GIRO</div>
+                    <div class="name">Girocard</div>
+                    <div class="role">Payment</div>
+                </a>
+                <a href="https://visacrypto.github.io/erp/" target="_blank" class="token-card">
+                    <div class="ticker">€ERP</div>
+                    <div class="name">ERP System</div>
+                    <div class="role">Enterprise</div>
+                </a>
+                <a href="https://eurc-cash.github.io/eurc/" target="_blank" class="token-card">
+                    <div class="ticker">€EURC</div>
+                    <div class="name">Euro Coin</div>
+                    <div class="role">Stablecoin</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 5. GOLDTAXI & RETAIL -->
+        <div class="sector-block">
+            <div class="sector-title"><span>🚕</span> Transport & Retail Brands</div>
+            <div class="token-grid">
+                <a href="https://goldtaxi.github.io/grab/" target="_blank" class="token-card">
+                    <div class="ticker">€GRAB</div>
+                    <div class="name">Grab</div>
+                    <div class="role">Transport</div>
+                </a>
+                <a href="https://goldtaxi.github.io/didi/" target="_blank" class="token-card">
+                    <div class="ticker">€DIDI</div>
+                    <div class="name">DiDi</div>
+                    <div class="role">Transport</div>
+                </a>
+                <a href="https://goldtaxi.github.io/uber/" target="_blank" class="token-card">
+                    <div class="ticker">€UBER</div>
+                    <div class="name">Uber</div>
+                    <div class="role">Transport</div>
+                </a>
+                <a href="https://goldtaxi.github.io/tip/" target="_blank" class="token-card">
+                    <div class="ticker">€TIP</div>
+                    <div class="name">Tips</div>
+                    <div class="role">Utility</div>
+                </a>
+                <a href="https://goldtaxi.github.io/fdx/" target="_blank" class="token-card">
+                    <div class="ticker">€FDX</div>
+                    <div class="name">FedEx</div>
+                    <div class="role">Logistics</div>
+                </a>
+                <a href="https://miybank.github.io/mb/" target="_blank" class="token-card">
+                    <div class="ticker">€MB</div>
+                    <div class="name">MiyBank</div>
+                    <div class="role">Banking</div>
+                </a>
+                <a href="https://byt-assist.github.io/nike/" target="_blank" class="token-card">
+                    <div class="ticker">€NIKE</div>
+                    <div class="name">Nike</div>
+                    <div class="role">Retail RWA</div>
+                </a>
+                <a href="https://byt-assist.github.io/puma/" target="_blank" class="token-card">
+                    <div class="ticker">€PUMA</div>
+                    <div class="name">Puma</div>
+                    <div class="role">Retail RWA</div>
+                </a>
+                <a href="https://byt-assist.github.io/zara/" target="_blank" class="token-card">
+                    <div class="ticker">€ZARA</div>
+                    <div class="name">Zara</div>
+                    <div class="role">Retail RWA</div>
+                </a>
+                <a href="https://byt-assist.github.io/gucci/" target="_blank" class="token-card">
+                    <div class="ticker">€GUCCI</div>
+                    <div class="name">Gucci</div>
+                    <div class="role">Retail RWA</div>
+                </a>
+                <a href="https://byt-assist.github.io/cos/" target="_blank" class="token-card">
+                    <div class="ticker">€COS</div>
+                    <div class="name">COS</div>
+                    <div class="role">Retail RWA</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 6. HUMO & BYT -->
+        <div class="sector-block">
+            <div class="sector-title"><span>🪙</span> Humo & BYT Assets</div>
+            <div class="token-grid">
+                <a href="https://humotoken-uzb.github.io/humo/" target="_blank" class="token-card">
+                    <div class="ticker">€HUMO</div>
+                    <div class="name">Humo Token</div>
+                    <div class="role">Stablecoin</div>
+                </a>
+                <a href="https://humotoken-uzb.github.io/auz/" target="_blank" class="token-card">
+                    <div class="ticker">€AUZ</div>
+                    <div class="name">Gold AUZ</div>
+                    <div class="role">Commodity</div>
+                </a>
+                <a href="https://byt-assist.github.io/byt/" target="_blank" class="token-card">
+                    <div class="ticker">€BYT</div>
+                    <div class="name">BYT Token</div>
+                    <div class="role">Utility</div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>© 2026 123 Network. Built on Solana.</p>
+        <div>
+            <a href="index.html">€Trillion</a>
+            <a href="https://eurocleartoken.github.io/millions/">€Millions</a>
+            <a href="https://123tokens.github.io/one/">$ONE</a>
+            <a href="ecosystem.html">Global Ecosystem Map</a>
+        </div>
+    </div>
+</footer>
+
+<script src="counter.js"></script>
+
+</body>
+</html>
